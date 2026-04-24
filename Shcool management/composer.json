@@ -12,8 +12,9 @@
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "filp/whoops": "^2.15",
+        "laravel/boost": "^2.4",
         "mockery/mockery": "^1.6",
-        "phpunit/phpunit": "^11.0",
+        "pestphp/pest": "^4.6",
         "rector/rector": "^2.4"
     },
     "autoload": {
@@ -50,7 +51,8 @@
             "block-insecure": false
         },
         "allow-plugins": {
-            "kylekatarnls/update-helper": true
+            "kylekatarnls/update-helper": true,
+            "pestphp/pest-plugin": true
         }
     }
 }
