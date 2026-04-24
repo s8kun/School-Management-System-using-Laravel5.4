@@ -12,6 +12,7 @@
                     <tr>
                         <th>#</th>
                         <th>Name</th>
+                        <th>Final Degree</th>
                         <th>Level</th>
                         <th>Teacher</th>
                         <th>Edit</th>
@@ -23,6 +24,7 @@
                     <tr>
                         <td>{{ $subject->id }}</td>
                         <td>{{ $subject->name }}</td>
+                        <td>{{ $subject->score }}</td>
                         <td>{{ $subject->level->name }}</td>
                         <td>{{ $subject->teacher->name }}</td>
                         <td><a href="/subjects/edit/{{ $subject->id }}"><button type="button" class="btn btn-priamry">Edit</button></a></td>

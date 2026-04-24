@@ -19,9 +19,9 @@ class Classroom extends Model
         return $this->hasMany(Student::class);
     }
 
-    public function teacher()
+    public function teachers()
     {
-        return $this->hasOne(Teacher::class);
+        return $this->hasMany(Teacher::class);
     }
 
 

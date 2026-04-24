@@ -50,11 +50,11 @@ class SubjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
         //
 
-        Subject::create(request(['name','level_id','teacher_id']));
+        Subject::create($request->validate($this->subjectValidationRules()));
 
         return redirect('/subjects');
     }
@@ -79,7 +79,10 @@ class SubjectController extends Controller
     public function edit(Subject $subject)
     {
         //
-        return view('subjects.edit');
+        $levels = Level::all();
+        $teachers = Teacher::all();
+
+        return view('subjects.edit', compact('subject', 'levels', 'teachers'));
     }
 
     /**
@@ -89,11 +92,11 @@ class SubjectController extends Controller
      * @param  \App\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function update(Subject $subject)
+    public function update(Request $request, Subject $subject)
     {
         //
 
-        $input = request(['name','level_id','teacher_id']);
+        $input = $request->validate($this->subjectValidationRules());
 
         $subject->fill($input)->save();
 
@@ -115,5 +118,15 @@ class SubjectController extends Controller
         return redirect('/subjects');
 
 
+    }
+
+    protected function subjectValidationRules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'score' => 'required|numeric|min:0',
+            'level_id' => 'required|integer|exists:levels,id',
+            'teacher_id' => 'required|integer|exists:teachers,id',
+        ];
     }
 }

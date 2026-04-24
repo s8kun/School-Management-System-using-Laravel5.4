@@ -79,8 +79,8 @@ class TeachersTableSeeder extends Seeder
                 'gender' => $data['gender'],
                 'experience' => $data['experience'],
                 'phone' => $data['phone'],
-                'classroom_id' => (string) $classrooms[$data['classroom']]->id,
-                'level_id' => (string) $data['level_id'],
+                'classroom_id' => $classrooms[$data['classroom']]->id,
+                'level_id' => $data['level_id'],
             ]);
 
             User::create([

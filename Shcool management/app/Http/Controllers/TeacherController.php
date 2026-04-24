@@ -8,7 +8,6 @@ use App\Models\Level;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Validator;
 
 class TeacherController extends Controller
 {
@@ -61,23 +60,28 @@ class TeacherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
         //
 
-        //dd(request()->all());
+        $validated = $request->validate($this->teacherValidationRules([
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+        ]));
 
-        //$validator = Validator::make(request()->all(), Student::$validationRules);
-
-        //if ($validator->fails())
-            //return redirect('/students/create')->withInput($request->all())->withErrors($validator);
-
-        $teacher = Teacher::create(request(['name','gender', 'classroom_id', 'level_id', 'experience', 'phone']));
+        $teacher = Teacher::create([
+            'name' => $validated['name'],
+            'gender' => $validated['gender'],
+            'classroom_id' => $validated['classroom_id'],
+            'level_id' => $validated['level_id'],
+            'experience' => $validated['experience'],
+            'phone' => $validated['phone'],
+        ]);
 
         User::create([
             'name' => $teacher->name,
-            'email' => request('email'),
-            'password' => bcrypt(request('password')),
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
             'userable_id' => $teacher->id,
             'userable_type' => 'Teacher'
         ]);
@@ -113,8 +117,9 @@ class TeacherController extends Controller
         //
 
         $classrooms = Classroom::all();
+        $levels = Level::all();
 
-        return view('teachers.edit', compact('teacher', 'classrooms'));
+        return view('teachers.edit', compact('teacher', 'classrooms', 'levels'));
     }
 
     /**
@@ -124,11 +129,11 @@ class TeacherController extends Controller
      * @param  \App\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function update(Teacher $teacher)
+    public function update(Request $request, Teacher $teacher)
     {
         //
 
-        $input = request(['name','experience', 'classroom_id']);
+        $input = $request->validate($this->teacherValidationRules());
 
         $teacher->fill($input)->save();
 
@@ -150,5 +155,17 @@ class TeacherController extends Controller
         return redirect('/teachers');
 
 
+    }
+
+    protected function teacherValidationRules(array $extraRules = [])
+    {
+        return array_merge([
+            'name' => 'required|string|max:255',
+            'gender' => 'required|in:Male,Female',
+            'classroom_id' => 'required|integer|exists:classrooms,id',
+            'level_id' => 'required|integer|exists:levels,id',
+            'experience' => 'required|string|max:255',
+            'phone' => 'required|digits_between:7,10',
+        ], $extraRules);
     }
 }

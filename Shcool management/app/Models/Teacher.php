@@ -33,8 +33,8 @@ class Teacher extends Model
         return $this->belongsTo(Level::class, 'level_id');
     }
 
-    public function subject()
+    public function subjects()
     {
-        return $this->hasOne(Subject::class);
+        return $this->hasMany(Subject::class);
     }
 }

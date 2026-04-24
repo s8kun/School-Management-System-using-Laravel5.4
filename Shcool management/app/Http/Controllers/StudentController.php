@@ -8,7 +8,6 @@ use App\Models\Level;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Validator;
 
 class StudentController extends Controller
 {
@@ -63,23 +62,28 @@ class StudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
         //
 
-        //dd(request()->all());
+        $validated = $request->validate($this->studentValidationRules([
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+        ]));
 
-        //$validator = Validator::make(request()->all(), Student::$validationRules);
-
-        //if ($validator->fails())
-            //return redirect('/students/create')->withInput($request->all())->withErrors($validator);
-
-        $student = Student::create(request(['name','gender', 'age', 'address', 'classroom_id', 'level_id']));
+        $student = Student::create([
+            'name' => $validated['name'],
+            'gender' => $validated['gender'],
+            'age' => $validated['age'],
+            'address' => $validated['address'],
+            'classroom_id' => $validated['classroom_id'],
+            'level_id' => $validated['level_id'],
+        ]);
 
         User::create([
             'name' => $student->name,
-            'email' => request('email'),
-            'password' => bcrypt(request('password')),
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
             'userable_id' => $student->id,
             'userable_type' => 'Student'
         ]);
@@ -124,11 +128,11 @@ class StudentController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Student $student)
+    public function update(Request $request, Student $student)
     {
         //
 
-        $input = request(['name','gender', 'age', 'address', 'classroom_id', 'level_id']);
+        $input = $request->validate($this->studentValidationRules());
 
         $student->fill($input)->save();
 
@@ -150,5 +154,17 @@ class StudentController extends Controller
         return redirect('/students');
 
 
+    }
+
+    protected function studentValidationRules(array $extraRules = [])
+    {
+        return array_merge([
+            'name' => 'required|string|max:255',
+            'gender' => 'required|in:Male,Female',
+            'age' => 'required|integer|min:1',
+            'address' => 'required|string|max:255',
+            'classroom_id' => 'required|integer|exists:classrooms,id',
+            'level_id' => 'required|integer|exists:levels,id',
+        ], $extraRules);
     }
 }
