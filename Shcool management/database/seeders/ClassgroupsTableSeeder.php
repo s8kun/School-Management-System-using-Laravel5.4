@@ -1,6 +1,6 @@
 <?php
 
-use App\Classgroup;
+use App\Models\Classgroup;
 use Illuminate\Database\Seeder;
 
 class ClassgroupsTableSeeder extends Seeder

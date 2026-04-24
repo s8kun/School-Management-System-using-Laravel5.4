@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Student;
-use Auth;
+use App\Models\Student;
+use Illuminate\Support\Facades\Auth;
 
 class StudentPageController extends Controller
 {

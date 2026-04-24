@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Student;
-use App\Classroom;
-use App\Level;
-use App\User;
+use App\Models\Student;
+use App\Models\Classroom;
+use App\Models\Level;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 
 class StudentController extends Controller

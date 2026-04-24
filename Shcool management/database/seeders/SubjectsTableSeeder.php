@@ -1,6 +1,6 @@
 <?php
 
-use App\Subject;
+use App\Models\Subject;
 use Illuminate\Database\Seeder;
 
 class SubjectsTableSeeder extends Seeder

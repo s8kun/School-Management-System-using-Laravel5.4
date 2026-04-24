@@ -1,7 +1,7 @@
 <?php
 
-use App\Student;
-use App\Subject;
+use App\Models\Student;
+use App\Models\Subject;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 

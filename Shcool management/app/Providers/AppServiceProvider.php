@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Admin;
+use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -17,6 +21,12 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
+
+        Relation::morphMap([
+            'Admin' => Admin::class,
+            'Student' => Student::class,
+            'Teacher' => Teacher::class,
+        ]);
 
     }
 

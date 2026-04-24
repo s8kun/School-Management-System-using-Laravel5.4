@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,7 +30,7 @@ class Teacher extends Model
 
     public function level()
     {
-        return $this->belongsTo(L::class, 'level_id');
+        return $this->belongsTo(Level::class, 'level_id');
     }
 
     public function subject()

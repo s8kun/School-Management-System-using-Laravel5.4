@@ -1,7 +1,7 @@
 <?php
 
-use App\Classroom;
-use App\Classgroup;
+use App\Models\Classroom;
+use App\Models\Classgroup;
 use Illuminate\Database\Seeder;
 
 class ClassroomsTableSeeder extends Seeder

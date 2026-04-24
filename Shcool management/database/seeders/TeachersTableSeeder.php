@@ -1,8 +1,8 @@
 <?php
 
-use App\Classroom;
-use App\Teacher;
-use App\User;
+use App\Models\Classroom;
+use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class TeachersTableSeeder extends Seeder

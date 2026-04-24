@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Subject;
-use App\Level;
-use App\Teacher;
+use App\Models\Subject;
+use App\Models\Level;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 class SubjectController extends Controller
