@@ -6,15 +6,15 @@
     "type": "project",
     "require": {
         "php": "^8.2",
-        "laravel/framework": "^11.0",
-        "laravel/tinker": "^2.9",
-        "laravel/ui": "^4.5"
+        "laravel/framework": "^12.0",
+        "laravel/tinker": "^2.10",
+        "laravel/ui": "^4.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "filp/whoops": "^2.15",
         "mockery/mockery": "^1.6",
-        "phpunit/phpunit": "^10.5",
+        "phpunit/phpunit": "^11.0",
         "rector/rector": "^2.4"
     },
     "autoload": {
